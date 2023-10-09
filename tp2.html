@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+
+    <style>
+        .task-completed {
+            text-decoration: line-through;
+        }
+    </style>
+</head>
+<body>
+<script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+
+<div id="app">
+    <div>Liste des tâches</div>
+    <button @click="displayCompleted = !displayCompleted">
+        {{displayCompleted ? "Masquer" : "Afficher"}} les tâches terminées
+    </button>
+
+    <ol>
+        <ul v-for="task in tasks">
+            <div v-if="displayCompleted || !task.completed">
+                <input type="checkbox" @click="task.completed = !task.completed" v-bind:checked="task.completed">
+                <a v-bind:class="{'task-completed': task.completed}"> #{{tasks.indexOf(task) + 1}} {{task.content}}</a>
+            </div>
+        </ul>
+    </ol>
+
+    <input type="text" v-model="input">
+    <button v-on:click="(input.trim().length > 0) ? tasks.push({content: input, completed: false}) : ''">Ajouter la tâche</button>
+
+    <div>Nombre de tâches à faire : {{tasks.filter(task => !task.completed).length}}</div>
+</div>
+
+<script>
+    const app = Vue.createApp({
+        data() {
+            return {
+                input: "",
+                tasks: [
+                    {content: "Répondre aux émails", completed: false},
+                    {content: "Faire du sport", completed: false},
+                    {content: "Aller au cinéma", completed: false},
+                ],
+
+                displayCompleted: true
+            }
+        },
+    })
+    app.mount('#app');
+</script>
+</body>
+</html>
