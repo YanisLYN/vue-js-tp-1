@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+
+    <div id="app">
+        <div v-if="isVisible">Texte affiché</div>
+        <button v-on:click=" isVisible =! isVisible ">
+            <div v-if="isVisible">Masquer</div>
+            <div v-else>Afficher</div>
+        </button>
+
+        <div v-if="isVisible">Le texte est visible</div>
+        <div v-else>Le texte est masqué</div>
+
+        <img v-bind:src="imageUrl" height="200" v-show="isVisible"> <br>
+        <input type="text" v-model="input" v-show="isVisible">
+        <button v-on:click="imageUrl = input" v-show="isVisible">Mettre à jour</button>
+    </div>
+
+    <script>
+        const app = Vue.createApp({
+            data() {
+                return {
+                    isVisible: true,
+                    imageUrl: "img/vuejs.png",
+                    input: "Saisissez une image",
+                }
+            },
+        })
+        app.mount('#app');
+    </script>
+</body>
+</html>
